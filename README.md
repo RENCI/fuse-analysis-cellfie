@@ -13,7 +13,7 @@ The fuse-style analysis module for the CellFIE systems biology models
 
 # test:
 
-Ensure there's no colleision with the port:
+Ensure there's no collision with the port:
 ```
 curl -X GET  http://localhost:8080/config
 ```
