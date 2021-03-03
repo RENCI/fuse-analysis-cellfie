@@ -24,3 +24,7 @@ Ensure there's no collision with the port:
 ```
 curl -X GET  http://localhost:8080/config
 ```
+A more rigorous testing:
+```
+./tests/test.sh
+```
