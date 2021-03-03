@@ -4,3 +4,6 @@
 [submodule "test/pds-server-mock"]
 	path = test/pds-server-mock
 	url = http://github.com/RENCI/pds-server-mock
+[submodule "tests/pds-server-mock"]
+	path = tests/pds-server-mock
+	url = http://github.com/RENCI/pds-server-mock
