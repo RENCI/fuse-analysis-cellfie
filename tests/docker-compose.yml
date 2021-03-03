@@ -1,0 +1,14 @@
+version: '3.4'
+services:
+  
+  fuse-analysis-cellfie-test:
+    build:
+      context: tests
+    command: ["-s", "-vv", "-x"]
+    depends_on:
+      - fuse-analysis-cellfie
+      - fuse-test-server
+
+  fuse-test-server:
+    build:
+      context: tests/pds-server-mock
