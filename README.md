@@ -1,3 +1,7 @@
+
+
+[![AppVeyor](https://img.shields.io/docker/cloud/build/txscience/fuse-analysis-cellfie?style=plastic)](https://hub.docker.com/repository/docker/txscience/fuse-analysis-cellfie/builds)
+
 # fuse-analysis-cellfie
 The fuse-style analysis module for the CellFIE systems biology models
 
