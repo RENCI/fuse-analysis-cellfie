@@ -1,180 +1,99 @@
 openapi: 3.0.0
 # Added by API Auto Mocking Plugin
 info:
-  description: Guidance plugin
+  description: Analysis plugin
   version: "4"
-  title: Guidance plugin
+  title: Analysis plugin
   contact:
     email: txscience@lists.renci.org
   license:
     name: Apache 2.0
-    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
 paths:
   /config:
     get:
-      summary: returns the config for the guidance plugin
+      summary: returns the config for the analysis plugin
       operationId: api.get_config
       responses:
-        '200':
+        "200":
           description: config
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Config'
+                $ref: "#/components/schemas/Config"
               example:
                 {
-                    "title": "DOAC variable mapper",
-                    "piid": "pdspi-mapper-DOAC",
-                    "pluginType": "m",
-                    "settingsDefaults": {
-                      "pluginSelectors": [ {
-                          "title": "FHIR URI - an URL (locator) or an URN (unique name)",
-                          "selectorValue": {
-                              "value": "http://hapi.fhir.org/baseR4",
-                              "title": "Happy FHIR base url" }
-                        }
-                      ],
-                      "modelParameters": [ 
-                        {
-                          "id": "current-time",
-                          "parameterDescription": "Compute variables relevant to this timestamp.",
-                          "parameterValue": { "value": "2019-09-20T00:00:01Z" },
-                          "legalValues": { "type": "string", "format": "time-stamp" }
-                        }
-                      ],
-                      "patientVariables": [
-                        {
-                          "id": "LOINC:30525-0",
-                          "title": "Age",
-                          "variableDescription": "Fractional age of patient relative to [current-time].",
-                          "legalValues": { "type": "number", "minimum": "0" },
-                        },
-                        {
-                          "id": "1114195.extant",
-                          "title": "Rivoroxaban, extant",
-                          "variableDescription": "Dosing of rivoroxaban, based on the finding of any rxnorm codes found on the record that map to rxCUI 1114195.",
-                          "legalValues": { "type": "number" } 
-                        },
-                        {
-                          "id": "1114195.intensity",
-                          "title": "Rivoroxaban, dosage",
-                          "variableDescription": "Dosing of rivoroxaban.",
-                          "legalValues": { "type": "number", "minimum": 0  } 
-                        },
-                        {
-                          "id": "HP:0001892.extant.days",
-                          "title": "Bleeding, days since",
-                          "variableDescription": "Days since the last bleeding event, relative to current-time. A value < -age means never. Bleeding events are identified by one of 50 ICD10 codes or 42 ICD9 codes.",
-                          "legalValues": { "type": "number" } 
-                        },
-                        {
-                          "id": "HP:0000077.extant.boolean",
-                          "title": "Kidney dysfunction, extant",
-                          "variableDescription": "If true, then Kidney dysfunction was found in the record for the patient, relative to current-time.",
-                          "legalValues": { "type": "boolean" },
-                        },
-                        {
-                          "id": "1114195.extant.count",
-                          "title": "Rivoroxaban dosing count",
-                          "variableDescription": "Number of times patient was dosed with Rivoroxaban.",
-                          "legalValues": { "type": "number" } 
-                        },
-                      ]
-                    }
+                  "title": "DOAC variable mapper",
+                  "piid": "pdspi-mapper-DOAC",
+                  "pluginType": "m",
+                  "settingsDefaults":
+                    {
+                      "pluginSelectors":
+                        [
+                          {
+                            "title": "FHIR URI - an URL (locator) or an URN (unique name)",
+                            "selectorValue":
+                              {
+                                "value": "http://hapi.fhir.org/baseR4",
+                                "title": "Happy FHIR base url",
+                              },
+                          },
+                        ],
+                      "modelParameters":
+                        [
+                          {
+                            "id": "current-time",
+                            "parameterDescription": "Compute variables relevant to this timestamp.",
+                            "parameterValue":
+                              { "value": "2019-09-20T00:00:01Z" },
+                            "legalValues":
+                              { "type": "string", "format": "time-stamp" },
+                          },
+                        ],
+                      "patientVariables":
+                        [
+                          {
+                            "id": "LOINC:30525-0",
+                            "title": "Age",
+                            "variableDescription": "Fractional age of patient relative to [current-time].",
+                            "legalValues": { "type": "number", "minimum": "0" },
+                          },
+                          {
+                            "id": "1114195.extant",
+                            "title": "Rivoroxaban, extant",
+                            "variableDescription": "Dosing of rivoroxaban, based on the finding of any rxnorm codes found on the record that map to rxCUI 1114195.",
+                            "legalValues": { "type": "number" },
+                          },
+                          {
+                            "id": "1114195.intensity",
+                            "title": "Rivoroxaban, dosage",
+                            "variableDescription": "Dosing of rivoroxaban.",
+                            "legalValues": { "type": "number", "minimum": 0 },
+                          },
+                          {
+                            "id": "HP:0001892.extant.days",
+                            "title": "Bleeding, days since",
+                            "variableDescription": "Days since the last bleeding event, relative to current-time. A value < -age means never. Bleeding events are identified by one of 50 ICD10 codes or 42 ICD9 codes.",
+                            "legalValues": { "type": "number" },
+                          },
+                          {
+                            "id": "HP:0000077.extant.boolean",
+                            "title": "Kidney dysfunction, extant",
+                            "variableDescription": "If true, then Kidney dysfunction was found in the record for the patient, relative to current-time.",
+                            "legalValues": { "type": "boolean" },
+                          },
+                          {
+                            "id": "1114195.extant.count",
+                            "title": "Rivoroxaban dosing count",
+                            "variableDescription": "Number of times patient was dosed with Rivoroxaban.",
+                            "legalValues": { "type": "number" },
+                          },
+                        ],
+                    },
                 }
-        '400':
+        "400":
           description: "Bad Request"
           content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message: 
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Message'
-                    example: [  {
-                      "timestamp": "2019-09-20T00:00:01Z",
-                      "event": "Unknown query parameters",
-                      "source": "client",
-                      "level": 4,
-                      "action": "Ignoring query parameters"
-                      } ]
-                  config:
-                    $ref: '#/components/schemas/Config'
-        '500':
-          description: "Internal Server Error"
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message: 
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Message'
-                    example: [  {
-                      "timestamp": "2019-09-20T00:00:01Z",
-                      "event": "Not a guidance plugin type, [m] for [pdspi-guidance-example].",
-                      "source": "admin user",
-                      "level": 1,
-                      "action": "Changed plugin from [m] type to 'g'[pdspi-guidance-example] and returning config as-is otherwise"
-                      } ]
-                  configs:
-                    $ref: '#/components/schemas/Config'
-  /guidance:
-    post:
-      summary: Given a patient ID and a plugin id, return the guidance
-      operationId: api.get_guidance
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/Guidance'
-              example:
-                [{  "piid": "pdspi-guidance-example",
-                   "patientId": "38",
-                   "settingsRequested": {
-                     "timestamp": "2019-12-03T13:41:09.942+00:00",
-                     "modelParameters": [ {
-                                            "id": "pdspi-guidance-example:1",
-                                            "title": "Extended interval nomogram",
-                                            "parameterDescription": "This calculator uses one of four extended-interval nomograms. Please choose one nomogram.",
-                                            "parameterValue": { "value": "Hartford" }
-                                          } ],
-                     "patientVariables": [       {
-                                                   "id": "LOINC:30525-0",
-                                                   "title": "Age",
-                                                   "variableValue": {
-                                                     "value": "0.5",
-                                                     "units": "years"
-                                                   },
-                                                   "how": "The value was specified by the end user."
-                                                 }, {
-                                                   "id": "LOINC:39156-5",
-                                                   "title": "BMI",
-                                                   "variableValue": {
-                                                     "value": "0.5",
-                                                     "units": "kg/m^2"
-                                                   },
-                                                   "how": "The value was specified by the end user."
-                                                 } ]
-                   }
-                }]
-      responses:
-        '200':
-          description: "Guidance matching query"
-          content: 
-            application/json:
-              schema:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/Guidance'
-        '400':
-          description: "Bad Request"
-          content: 
             application/json:
               schema:
                 type: object
@@ -182,43 +101,152 @@ paths:
                   message:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Message'
-                    example: [  {
-                      "timestamp": "2019-09-20T00:00:01Z",
-                      "event": "Missing patient variable[LOINC:30525-0]",
-                      "source": "pdspi-mapper-example",
-                      "level": 3,
-                      "action": "Called plugin with missing values [pdspi-guidance-example]"
-                      },
-                      {
-                      "timestamp": "2019-09-20T00:00:02Z",
-                      "event": "Missing patient variable[LOINC:30525-0]",
-                      "source": "pdspi-guidance-example",
-                      "level": 3,
-                      "action": "Set LOINC:30525-0='85' for most conservative guidance"
-                      }]
-                  guidance:
-                    $ref: '#/components/schemas/Guidance'
-        '500':
+                      $ref: "#/components/schemas/Message"
+                    example:
+                      [
+                        {
+                          "timestamp": "2019-09-20T00:00:01Z",
+                          "event": "Unknown query parameters",
+                          "source": "client",
+                          "level": 4,
+                          "action": "Ignoring query parameters",
+                        },
+                      ]
+                  config:
+                    $ref: "#/components/schemas/Config"
+        "500":
           description: "Internal Server Error"
-          content: 
+          content:
             application/json:
               schema:
                 type: object
                 properties:
-                  message: 
+                  message:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Message'
-                    example: [  {
-                      "timestamp": "2019-09-20T00:00:01Z",
-                      "event": "Guidance plugin results did not pass JSON validator:[{\"valuE\": \"5\"}]",
-                      "source": "pdspi-guidance-example",
-                      "level": 3,
-                      "action": "Correction attempted: 'valuE' to 'value'."
-                      }]
+                      $ref: "#/components/schemas/Message"
+                    example:
+                      [
+                        {
+                          "timestamp": "2019-09-20T00:00:01Z",
+                          "event": "Not a guidance plugin type, [m] for [pdspi-guidance-example].",
+                          "source": "admin user",
+                          "level": 1,
+                          "action": "Changed plugin from [m] type to 'g'[pdspi-guidance-example] and returning config as-is otherwise",
+                        },
+                      ]
+                  configs:
+                    $ref: "#/components/schemas/Config"
+  /analysis:
+    get:
+      summary: Given a patient ID and a plugin id, return the guidance
+      operationId: api.get_analysis
+      # requestBody:
+      #   content:
+      #     application/json:
+      # schema:
+      #   type: array
+      #   items:
+      #     $ref: "#/components/schemas/Guidance"
+      #   example:
+      #     [
+      #       {
+      #         "piid": "pdspi-guidance-example",
+      #         "patientId": "38",
+      #         "settingsRequested":
+      #           {
+      #             "timestamp": "2019-12-03T13:41:09.942+00:00",
+      #             "modelParameters":
+      #               [
+      #                 {
+      #                   "id": "pdspi-guidance-example:1",
+      #                   "title": "Extended interval nomogram",
+      #                   "parameterDescription": "This calculator uses one of four extended-interval nomograms. Please choose one nomogram.",
+      #                   "parameterValue": { "value": "Hartford" },
+      #                 },
+      #               ],
+      #             "patientVariables":
+      #               [
+      #                 {
+      #                   "id": "LOINC:30525-0",
+      #                   "title": "Age",
+      #                   "variableValue":
+      #                     { "value": "0.5", "units": "years" },
+      #                   "how": "The value was specified by the end user.",
+      #                 },
+      #                 {
+      #                   "id": "LOINC:39156-5",
+      #                   "title": "BMI",
+      #                   "variableValue":
+      #                     { "value": "0.5", "units": "kg/m^2" },
+      #                   "how": "The value was specified by the end user.",
+      #                 },
+      #               ],
+      #           },
+      #       },
+      #     ]
+      responses:
+        "200":
+          description: "Guidance matching query"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Guidance"
+        "400":
+          description: "Bad Request"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Message"
+                    example:
+                      [
+                        {
+                          "timestamp": "2019-09-20T00:00:01Z",
+                          "event": "Missing patient variable[LOINC:30525-0]",
+                          "source": "pdspi-mapper-example",
+                          "level": 3,
+                          "action": "Called plugin with missing values [pdspi-guidance-example]",
+                        },
+                        {
+                          "timestamp": "2019-09-20T00:00:02Z",
+                          "event": "Missing patient variable[LOINC:30525-0]",
+                          "source": "pdspi-guidance-example",
+                          "level": 3,
+                          "action": "Set LOINC:30525-0='85' for most conservative guidance",
+                        },
+                      ]
                   guidance:
-                    $ref: '#/components/schemas/Guidance'
+                    $ref: "#/components/schemas/Guidance"
+        "500":
+          description: "Internal Server Error"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Message"
+                    example:
+                      [
+                        {
+                          "timestamp": "2019-09-20T00:00:01Z",
+                          "event": 'Guidance plugin results did not pass JSON validator:[{"valuE": "5"}]',
+                          "source": "pdspi-guidance-example",
+                          "level": 3,
+                          "action": "Correction attempted: 'valuE' to 'value'.",
+                        },
+                      ]
+                  guidance:
+                    $ref: "#/components/schemas/Guidance"
 components:
   schemas:
     Message:
@@ -232,12 +260,12 @@ components:
         - source
         - level
       properties:
-        '-id':
+        "-id":
           not: {}
         timestamp:
           type: string
           format: date-time
-          example: '2019-09-20T00:00:00Z'
+          example: "2019-09-20T00:00:00Z"
         event:
           type: string
           example: >-
@@ -297,7 +325,7 @@ components:
           description: >-
             Admin can 'disable' this plugin, and if so, prevent it from being
             chosen on any client or dashboard.
-          example: true 
+          example: true
         pluginDependencies:
           type: array
           items:
@@ -337,7 +365,7 @@ components:
             A human-readable value for the type. 'g'=Guidance, 'c'=Convenience, 
             'm'=Mapper, 'f'=FHIR, 'mD'=Default Mapper, 'fD'=Default FHIR
         settingsDefaults:
-          $ref: '#/components/schemas/Settings'
+          $ref: "#/components/schemas/Settings"
     Guidance:
       description: >-
         Guidance, justification, visualization data and data type, as well as
@@ -373,19 +401,19 @@ components:
           type: string
           example: smart-7321938
         settingsRequested:
-          $ref: '#/components/schemas/Settings'
+          $ref: "#/components/schemas/Settings"
         settingsUsed:
-          $ref: '#/components/schemas/Settings'
+          $ref: "#/components/schemas/Settings"
         cards:
           type: array
-          description: 'Set of suggested actions, per the CDS-Hooks standard'
+          description: "Set of suggested actions, per the CDS-Hooks standard"
           items:
-            $ref: '#/components/schemas/Card'
+            $ref: "#/components/schemas/Card"
         advanced:
           type: array
-          description: 'Set of supporting data outputs for visualization'
+          description: "Set of supporting data outputs for visualization"
           items:
-            $ref: '#/components/schemas/Output'
+            $ref: "#/components/schemas/Output"
         timeout:
           type: integer
           description: >-
@@ -428,7 +456,7 @@ components:
           type: array
           description: Vega-lite spec used for guidance visualization
           items:
-            $ref: '#/components/schemas/Spec'
+            $ref: "#/components/schemas/Spec"
     Settings:
       type: object
       description: >-
@@ -445,19 +473,19 @@ components:
             AND indication _y_ then use plugin _z_'.
           type: array
           items:
-            $ref: '#/components/schemas/PluginSelector'
+            $ref: "#/components/schemas/PluginSelector"
           example:
             - id: dosing.rxCUI
               title: Drug
               legalValues:
                 type: string
                 enum:
-                  - value: 'rxCUI:1596450'
+                  - value: "rxCUI:1596450"
                     title: Gentamicin
-                  - value: 'rxCUI:1723160'
+                  - value: "rxCUI:1723160"
                     title: Amikacin
               selectorValue:
-                value: 'rxCUI:1596450'
+                value: "rxCUI:1596450"
                 title: Amikacin
         modelParameters:
           description: >-
@@ -465,9 +493,9 @@ components:
             the plugin
           type: array
           items:
-            $ref: '#/components/schemas/PluginParameter'
+            $ref: "#/components/schemas/PluginParameter"
           example:
-            - id: 'pdspi-guidance-example:1'
+            - id: "pdspi-guidance-example:1"
               title: Extended interval nomogram
               parameterDescription: >-
                 This calculator uses one of four extended-interval nomograms.
@@ -484,14 +512,14 @@ components:
         patientVariables:
           type: array
           items:
-            $ref: '#/components/schemas/PatientVariable'
+            $ref: "#/components/schemas/PatientVariable"
           example:
-            - id: 'LOINC:30525-0'
+            - id: "LOINC:30525-0"
               certitude: 1
               how: The value was specified by the end user.
               title: Age
               variableValue:
-                value: '.5'
+                value: ".5"
                 units: years
               why: >-
                 Age is used to calculate the creatinine clearance. Dosing is
@@ -499,12 +527,12 @@ components:
                 patients
               legalValues:
                 type: number
-                minimum: '0'
+                minimum: "0"
         timestamp:
-          description: 'If absent, defaults to current time. Can be overridden by patientVariables timestamp value on a variable-by-variable basis.'
+          description: "If absent, defaults to current time. Can be overridden by patientVariables timestamp value on a variable-by-variable basis."
           type: string
           format: date-time
-          example: '2019-12-03T13:41:09.942+00:00'
+          example: "2019-12-03T13:41:09.942+00:00"
     PluginSelector:
       type: object
       description: >-
@@ -545,19 +573,19 @@ components:
           example:
             type: string
             enum:
-              - value: 'urn://cdwh.nctracs.v1'
+              - value: "urn://cdwh.nctracs.v1"
                 title: NCTraCS Carolina Data Warehouse
-              - value: 'http://hapi.fhir.org/baseR4'
-              - value: 'https://open-ic.epic.com/FHIR/api/FHIR/DSTU2'
+              - value: "http://hapi.fhir.org/baseR4"
+              - value: "https://open-ic.epic.com/FHIR/api/FHIR/DSTU2"
         selectorValue:
           type: string
           description: >-
             The title in the example is optional. NOTE: This value is actually an object type, but we use
             'string' here to overcome a shortcoming of the swagger ui. This
             design choice was made in order to prioritize a better interactive
-            documentation experience for the API user. 
+            documentation experience for the API user.
           example:
-            value: 'http://hapi.fhir.org/baseR4'
+            value: "http://hapi.fhir.org/baseR4"
             title: Hapi FHIR base URL
         title:
           type: string
@@ -565,7 +593,8 @@ components:
           description: Human-readable name for this selector type.
     PluginParameter:
       type: object
-      description: Used for specifying factory defaults, admin over-ride defaults,
+      description:
+        Used for specifying factory defaults, admin over-ride defaults,
         user-over-ride input values, and ultimately the values that the plugin
         will use, or reports as having used, to parameterize models.
       required:
@@ -579,7 +608,7 @@ components:
             Parameters are completely defined by the plugin and need not be
             interchangable with other plugins. The client will have no prior
             knowledge for plugin parameters.
-          example: 'pdspi-guidance-example:1'
+          example: "pdspi-guidance-example:1"
         title:
           type: string
           description: >-
@@ -619,7 +648,7 @@ components:
             'type': 'integer' } for an integer. NOTE: This value is actually an
             object type, but we use 'string' here to overcome a shortcoming of
             the swagger ui. This design choice was made in order to prioritize a
-            better interactive documentation experience for the API user. 
+            better interactive documentation experience for the API user.
           example:
             type: string
             enum:
@@ -645,7 +674,7 @@ components:
             then the user won't have the option of overriding it if the client ignores it.
             Stylistically, community standard coding system used for this type will 
             preface the code used, e.g., LOINC:3025-0, ICD10:R53, HP:0000819, rxCUI:1596450, etc.
-          example: 'LOINC:30525-0'
+          example: "LOINC:30525-0"
         certitude:
           type: integer
           description: >-
@@ -664,7 +693,7 @@ components:
             'comma-delimited list of {BMI,date} objects for the patient with a
             given study period, as defined by the 'study-start', 'study-end'
             model parameters'. The comprehensive list of supported patient variables is tied to
-            the PDS release. 
+            the PDS release.
           example: "The age is determined by subtracting the birthdate from the current time. Also known as 'chronological age' or 'Post Natal Age' (PNA). Specified as somen fraction of years, convention."
         how:
           type: string
@@ -694,7 +723,7 @@ components:
             interactive documentation experience for the API user.
           type: object
           example:
-            value: '0.5'
+            value: "0.5"
             units: years
         why:
           type: string
@@ -719,14 +748,14 @@ components:
             'type': 'integer' } for an integer.
           example:
             type: number
-            minimum: '0'
+            minimum: "0"
         group:
-            type: string
-            description: >-
-              A 'tag' for grouping semantically similar variables. Used to inform
-              the client on how to render many patient variables, e.g., 'Symptom', 
-              'Profile', 'Pre-existing condition'. Can be safely ignored by client.
-            example: "Patient variable"
+          type: string
+          description: >-
+            A 'tag' for grouping semantically similar variables. Used to inform
+            the client on how to render many patient variables, e.g., 'Symptom', 
+            'Profile', 'Pre-existing condition'. Can be safely ignored by client.
+          example: "Patient variable"
         timestamp:
           type: string
           description: >-
@@ -741,7 +770,7 @@ components:
         - indicator
         - source
       properties:
-        id: 
+        id:
           type: string
         title:
           type: string
@@ -762,14 +791,14 @@ components:
         suggestions:
           type: array
           items:
-            $ref: '#/components/schemas/Suggestion'
+            $ref: "#/components/schemas/Suggestion"
         selectionBehavior:
           type: string
           description: " intended behavior of the suggestions. If suggestions present, value must be at-most-one"
-        links: 
+        links:
           type: array
           items:
-            $ref: '#/components/schemas/Link'
+            $ref: "#/components/schemas/Link"
     Spec:
       type: object
       required:
@@ -779,7 +808,7 @@ components:
         $schema:
           type: string
           description: URL to JSON schema for a vega-lite specification
-          example: 'https://vega.github.io/schema/vega-lite/v4.json'
+          example: "https://vega.github.io/schema/vega-lite/v4.json"
         title:
           type: string
           description: title for the plot
@@ -835,12 +864,12 @@ components:
                   example: quantitative
                 axis:
                   type: object
-                  description: 'specify axis properties, e.g., title of the axis'
+                  description: "specify axis properties, e.g., title of the axis"
                   properties:
                     title:
                       type: string
                       example: x axis
-            'y':
+            "y":
               type: object
               description: visualization encodings for y axis
               properties:
@@ -853,14 +882,14 @@ components:
                 field:
                   type: string
                   description: the field name in data to bind to y axis at runtime
-                  example: 'y'
+                  example: "y"
                 type:
                   type: string
                   description: type of the data field to bind for visualization
                   example: quantitative
                 axis:
                   type: object
-                  description: 'specify axis properties, e.g., title of the axis'
+                  description: "specify axis properties, e.g., title of the axis"
                   properties:
                     title:
                       type: string
@@ -910,7 +939,7 @@ components:
         actions:
           type: array
           items:
-            $ref: '#/components/schemas/Action'
+            $ref: "#/components/schemas/Action"
     Action:
       type: object
       required:

@@ -108,8 +108,8 @@ guidance_input = [{
 
 php = "http://fuse-analysis-cellfie:8080"
 
-def test_guidance():
-    resp = requests.post(f"{php}/guidance", headers=json_post_headers, json=guidance_input)
+def test_analysis():
+    resp = requests.post(f"{php}/analysis", headers=json_post_headers, json=guidance_input)
     resp_output = resp.json()
     assert resp.status_code == 200
     assert len(resp_output) == 1

@@ -1,8 +1,9 @@
 import os
 import requests
+from flask import Response, jsonify, request
 
 from api.utils import generate_time_series_data, generate_multi_time_series_data, generate_scatter_plot_data, \
-    generate_multi_scatter_plot_data, generate_histogram_data, generate_dosing_data, generate_dosing_inputs
+    generate_multi_scatter_plot_data, generate_histogram_data, generate_dosing_data, generate_dosing_inputs, root_dir, get_file
 
 
 fuse_host = os.getenv("FUSE_HOST", "localhost")
@@ -205,73 +206,87 @@ def get_config():
     return config
 
 
-def get_guidance(body):
-    def extract(var, attr, type="patientVariables"):
-        return var.get(attr, next(filter(lambda rpv: rpv["id"] == var["id"], config["settingsDefaults"][type]))[attr])
+def get_analysis():
+    if filename := request.args.get("filename"):
+        try:
+            content = get_file(filename)
+            return Response(content, mimetype="text/html")
+        except Exception:
+            return jsonify(
+                {
+                    "These are the following files available": os.listdir(
+                        "/usr/src/app/data"
+                    )
+                }
+            )
+    else:
+        return "Please provide the filename query param ", 404
+    # def extract(var, attr, type="patientVariables"):
+    #     return var.get(attr, next(filter(lambda rpv: rpv["id"] == var["id"], config["settingsDefaults"][type]))[attr])
 
-    inputs = []
-    age = None
-    weight = None
-    bmi = None
-    dose = None
-    tau = None
-    num_cycles = None
-    ret_input = {}
-    input_dose = None
-    input_tau = None
-    input_num_cycles = None
-    ret_guidance = []
-    for body_item in body:
-        if 'settingsRequested' in body_item and 'modelParameters' in body_item['settingsRequested']:
-            for var in body_item['settingsRequested']['modelParameters']:
-                if var['id'] == 'oid-6:dose':
-                    lvals = extract(var, "legalValues", type="modelParameters")
-                    dose = var['parameterValue']['value']
-                    min = int(lvals['minimum'])
-                    max = int(lvals['maximum'])
-                    if dose < min or dose > max:
-                        return {'error': 'input dose is not in valid range'}
-                elif var['id'] == 'oid-6:tau':
-                    lvals = extract(var, "legalValues", type="modelParameters")
-                    tau = var['parameterValue']['value']
-                    min = int(lvals['minimum'])
-                    max = int(lvals['maximum'])
-                    if tau < min or tau > max:
-                        return {'error': 'input tau is not in valid range'}
-                elif var['id'] == 'oid-6:num_cycles':
-                    lvals = extract(var, "legalValues", type="modelParameters")
-                    num_cycles = var['parameterValue']['value']
-                    min = int(lvals['minimum'])
-                    max = int(lvals['maximum'])
-                    if num_cycles < min or num_cycles > max:
-                        return {'error': 'input num of cycles is not in valid range'}
+    # inputs = []
+    # age = None
+    # weight = None
+    # bmi = None
+    # dose = None
+    # tau = None
+    # num_cycles = None
+    # ret_input = {}
+    # input_dose = None
+    # input_tau = None
+    # input_num_cycles = None
+    # ret_guidance = []
+    # for body_item in body:
+    #     if 'settingsRequested' in body_item and 'modelParameters' in body_item['settingsRequested']:
+    #         for var in body_item['settingsRequested']['modelParameters']:
+    #             if var['id'] == 'oid-6:dose':
+    #                 lvals = extract(var, "legalValues", type="modelParameters")
+    #                 dose = var['parameterValue']['value']
+    #                 min = int(lvals['minimum'])
+    #                 max = int(lvals['maximum'])
+    #                 if dose < min or dose > max:
+    #                     return {'error': 'input dose is not in valid range'}
+    #             elif var['id'] == 'oid-6:tau':
+    #                 lvals = extract(var, "legalValues", type="modelParameters")
+    #                 tau = var['parameterValue']['value']
+    #                 min = int(lvals['minimum'])
+    #                 max = int(lvals['maximum'])
+    #                 if tau < min or tau > max:
+    #                     return {'error': 'input tau is not in valid range'}
+    #             elif var['id'] == 'oid-6:num_cycles':
+    #                 lvals = extract(var, "legalValues", type="modelParameters")
+    #                 num_cycles = var['parameterValue']['value']
+    #                 min = int(lvals['minimum'])
+    #                 max = int(lvals['maximum'])
+    #                 if num_cycles < min or num_cycles > max:
+    #                     return {'error': 'input num of cycles is not in valid range'}
 
-            input_dose, input_tau, input_num_cycles, ret_input = generate_dosing_inputs(dose=dose,
-                                                                                        tau=tau,
-                                                                                        num_cycles=num_cycles)
-        for var in body_item['settingsRequested']["patientVariables"]:
-            if var['id'] == 'LOINC:30525-0':
-                age = var["variableValue"]['value']
-            elif var['id'] == 'LOINC:29463-7':
-                weight = var["variableValue"]['value']
-            elif var['id'] == 'LOINC:39156-5':
-                bmi = var["variableValue"]['value']
-            inputs.append({
-                "id": var["id"],
-                "title": extract(var, "title"),
-                "how": var["how"],
-                "why": extract(var, "why"),
-                "variableValue": var["variableValue"],
-                "legalValues": extract(var, "legalValues"),
-                "timestamp": var.get("timestamp", "2020-02-18T18:54:57.099Z")
-            })
+    #         input_dose, input_tau, input_num_cycles, ret_input = generate_dosing_inputs(dose=dose,
+    #                                                                                     tau=tau,
+    #                                                                                     num_cycles=num_cycles)
+    #     for var in body_item['settingsRequested']["patientVariables"]:
+    #         if var['id'] == 'LOINC:30525-0':
+    #             age = var["variableValue"]['value']
+    #         elif var['id'] == 'LOINC:29463-7':
+    #             weight = var["variableValue"]['value']
+    #         elif var['id'] == 'LOINC:39156-5':
+    #             bmi = var["variableValue"]['value']
+    #         inputs.append({
+    #             "id": var["id"],
+    #             "title": extract(var, "title"),
+    #             "how": var["how"],
+    #             "why": extract(var, "why"),
+    #             "variableValue": var["variableValue"],
+    #             "legalValues": extract(var, "legalValues"),
+    #             "timestamp": var.get("timestamp", "2020-02-18T18:54:57.099Z")
+    #         })
 
-        ret_guidance.append({
-            **guidance,
-            "settingsRequested": body_item['settingsRequested'],
-            "settingsUsed": {'patientVariables': inputs,
-                              'modelParameters': ret_input},
-            "advanced": generate_vis_outputs(age=age, weight=weight, bmi=bmi, dose=input_dose, tau=input_tau,
-                                             num_cycles=input_num_cycles)
-        })
-    return ret_guidance
+    #     ret_guidance.append({
+    #         **guidance,
+    #         "settingsRequested": body_item['settingsRequested'],
+    #         "settingsUsed": {'patientVariables': inputs,
+    #                           'modelParameters': ret_input},
+    #         "advanced": generate_vis_outputs(age=age, weight=weight, bmi=bmi, dose=input_dose, tau=input_tau,
+    #                                          num_cycles=input_num_cycles)
+    #     })
+    # return ret_guidance
