@@ -156,3 +156,12 @@ def generate_dosing_data(p_age=None, p_weight=None, p_bmi=None, dose=None, tau=N
         return resp.json()
     else:
         return []
+
+
+def root_dir():  # pragma: no cover
+    return os.path.abspath(os.path.dirname(__file__))
+
+
+def get_file(filename):  # pragma: no cover
+    src = os.path.join("/usr/src/app/data/", filename)
+    return open(src).read()
