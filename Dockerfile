@@ -1,16 +1,12 @@
-FROM python:3.8-alpine
+FROM python:3.9-buster
 
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+RUN apt-get update
+RUN apt-get -y install apt-transport-https ca-certificates curl gnupg2 software-properties-common
 
-RUN apk --no-cache add gcc musl-dev libffi-dev file make
-RUN pip3 install --no-cache-dir flask greenlet==0.4.16 gevent==1.4.0 gunicorn==19.9.0 connexion[swagger-ui] oslash
+EXPOSE 8000
 
-COPY api /usr/src/app/api
-COPY tx-utils/src /usr/src/app
-COPY data /usr/src/app/data
+COPY ./requirements.txt /app/requirements.txt
+RUN pip install -r /app/requirements.txt
+COPY . /app
 
-ENTRYPOINT ["gunicorn"]
-
-CMD ["-w", "4", "-b", "0.0.0.0:8080", "api.server:create_app()"]
-
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

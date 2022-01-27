@@ -1,34 +1,12 @@
+# fuse-analysis
+Dependent on the following containers which will be pulled in the docker-compose file:
+* tx-persistent
+* redis
 
+The following containers support the endpoints that are called from this repo:
 
-[![AppVeyor](https://img.shields.io/docker/cloud/build/txscience/fuse-analysis-cellfie?style=plastic)](https://hub.docker.com/repository/docker/txscience/fuse-analysis-cellfie/builds)
+* txscience/fuse-mapper-immunespace:0.1
+* txscience/tx-immunespace-groups:0.3
+* hmasson/cellfie-standalone-app:v2
 
-# fuse-analysis-cellfie
-The fuse-style analysis module for the CellFIE systems biology models
-
-# install:
-```
-git clone --recursive http://github.com/RENCI/fuse-analysis-cellfie.git
-```
-Be sure docker and python are properly installed, see docs [here](https://github.com/RENCI/pdspi-fhir-example/tree/master/doc) might help.
-
-# start:
-Then run:
-```
-./up.sh
-```
-
-# down:
-```
-./down.sh
-```
-
-# test:
-
-Ensure there's no collision with the port:
-```
-curl -X GET  http://localhost:8080/config
-```
-A more rigorous testing:
-```
-./tests/test.sh
-```
+For example, `docker image ls` should list the above 3 containers
